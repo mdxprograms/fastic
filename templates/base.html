@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Fastic</title> 
+  </head>
+  <body>
+    <h1>
+      <a href="{{url_for("index")}}">Fastic</a> 
+    </h1>
+    {% block content %}
+      <p>Default content</p>
+    {% endblock content %}
+  </body>
+</html>
