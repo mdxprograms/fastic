@@ -1,3 +1,3 @@
-*.pyc
-.DS_Store
-node_modules/
+# Fastic
+
+>Flask based static site boilerplate/generator
