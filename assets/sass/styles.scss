@@ -1,0 +1,11 @@
+@import "colors";
+@import "breakpoints";
+
+body {
+  background: $white;
+}
+
+h1, h2, h3, a {
+  color: $blue;
+}
+
