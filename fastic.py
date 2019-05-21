@@ -24,6 +24,13 @@ app.config.from_object(__name__)
 pages = FlatPages(app)
 freezer = Freezer(app)
 
+# slimit hack - suppress false errors
+# https://github.com/rspivak/slimit/issues/97#issuecomment-464370110
+slimit.lexer.ply.lex.PlyLogger =  \
+    slimit.parser.ply.yacc.PlyLogger = \
+    type('_NullLogger', (slimit.lexer.ply.lex.NullLogger,),
+         dict(__init__=lambda s, *_, **__: (None, s.super().__init__())[0]))
+
 
 @app.route('/')
 def index():
