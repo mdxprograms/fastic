@@ -15,5 +15,5 @@
 ### run dev
 `python fastic.py`
 
-## run build
+### run build
 `python fastic.py build`
