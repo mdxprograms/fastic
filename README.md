@@ -10,6 +10,7 @@
 
 ### setup
 `pipenv install`
+
 `pipenv shell`
 
 ### run dev
