@@ -18,3 +18,5 @@
 
 ### run build
 `python fastic.py build`
+
+### TODO: Add cockpit integration details
