@@ -1,4 +1,3 @@
-import json
 import os
 import sass
 import sys
@@ -7,13 +6,14 @@ import slimit
 
 from dukpy import babel_compile
 from glob import glob
-from jinja2 import Environment, FileSystemLoader, Template
 from livereload import Server
 from flask import Flask, render_template
 from flask_flatpages import FlatPages
 from flask_frozen import Freezer
 from shutil import copyfile, rmtree
 
+from data_fetcher import fetch_data
+from utils import load_cockpit, has_cockpit
 
 DEBUG = True
 FLATPAGES_AUTO_RELOAD = DEBUG
@@ -26,25 +26,30 @@ freezer = Freezer(app)
 
 # slimit hack - suppress false errors
 # https://github.com/rspivak/slimit/issues/97#issuecomment-464370110
-slimit.lexer.ply.lex.PlyLogger =  \
+slimit.lexer.ply.lex.PlyLogger = \
     slimit.parser.ply.yacc.PlyLogger = \
     type('_NullLogger', (slimit.lexer.ply.lex.NullLogger,),
          dict(__init__=lambda s, *_, **__: (None, s.super().__init__())[0]))
 
+cockpit = {}
+if has_cockpit():
+    cockpit = load_cockpit()
+
 
 @app.route('/')
 def index():
-    return render_template('index.html', pages=pages)
+    return render_template('index.html', pages=pages, cms_url=cockpit['cms_url'] or '')
 
 
 @app.route('/<path:path>/')
 def page(path):
-    page = pages.get_or_404(path)
-    template = page.meta.get('template', 'page.html')
-    return render_template(template, page=page)
+    page_data = pages.get_or_404(path)
+    template = page_data.meta.get('template', 'page.html')
+    return render_template(template, page=page_data, cms_url=cockpit['cms_url'] or '')
 
 
 def minify_js(code):
+    print("minifying js...")
     return slimit.minify(str(code), mangle=True, mangle_toplevel=True)
 
 
@@ -80,6 +85,7 @@ def copy_images():
 
 
 def build_pages():
+    print("building site...")
     freezer.freeze()
     build_js()
     build_styles()
@@ -87,6 +93,7 @@ def build_pages():
 
 
 def run_dev():
+    print("starting dev...")
     server = Server()
     server.watch('./pages', build_pages)
     server.watch('./templates', build_pages)
@@ -100,8 +107,12 @@ if __name__ == '__main__':
         rmtree("build")
         os.mkdir("build")
 
-    if len(sys.argv) > 1 and sys.argv[1] == 'build':
-        build_pages()
+    if len(sys.argv) > 1:
+        command = sys.argv[1]
+        if command == 'build':
+            build_pages()
+        elif command == 'fetch_data' and has_cockpit():
+            fetch_data()
     else:
         build_pages()
         run_dev()
