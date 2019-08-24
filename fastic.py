@@ -73,6 +73,7 @@ def build_styles():
 
 def copy_images():
     print("copying images...")
+
     if not os.path.exists("build/assets/images"):
         os.makedirs("build/assets/images")
 
@@ -103,12 +104,8 @@ if __name__ == '__main__':
         rmtree("build")
         os.mkdir("build")
 
-    print(sys.argv)
-
-    if len(sys.argv) > 1:
-        command = sys.argv[1]
-        if command == 'build':
-            build_pages()
+    if len(sys.argv) > 1 and sys.argv[1] == 'build':
+        build_pages()
     else:
         build_pages()
         run_dev()
