@@ -3,12 +3,14 @@
 {% block content %}
   <h2>List of pages</h2>
 
+  <h3>{{fast.parent.title}}</h3>
+
   <img src="/assets/images/inspire.jpg" alt="">
 
   <ul>
-    {% for page in pages %}
+    {% for page in fast %}
       <li>
-        <a href="{{url_for("page", path=page.path)}}">{{page.title}}</a> 
+        <a href="{{url_for("page", path=page.path)}}">{{page.title}}</a>
       </li>
     {% else %}
       <li>No pages</li>

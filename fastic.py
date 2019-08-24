@@ -13,6 +13,8 @@ from flask_flatpages import FlatPages
 from flask_frozen import Freezer
 from shutil import copyfile, rmtree
 
+import config
+
 load_dotenv(find_dotenv())
 
 DEBUG = os.getenv("DEBUG")
@@ -34,14 +36,16 @@ slimit.lexer.ply.lex.PlyLogger = \
 
 @app.route('/')
 def index():
-    return render_template('index.html', pages=pages)
+    pages.parent = config
+    return render_template('index.html', fast=pages)
 
 
 @app.route('/<path:path>/')
 def page(path):
     page_data = pages.get_or_404(path)
+    page_data.parent = config
     template = page_data.meta.get('template', 'page.html')
-    return render_template(template, page=page_data)
+    return render_template(template, fast=page_data)
 
 
 def minify_js(code):
