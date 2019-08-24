@@ -12,9 +12,6 @@ from flask_flatpages import FlatPages
 from flask_frozen import Freezer
 from shutil import copyfile, rmtree
 
-from data_fetcher import fetch_data
-from utils import load_cockpit, has_cockpit
-
 DEBUG = True
 FLATPAGES_AUTO_RELOAD = DEBUG
 FLATPAGES_EXTENSION = ".md"
@@ -31,21 +28,17 @@ slimit.lexer.ply.lex.PlyLogger = \
     type('_NullLogger', (slimit.lexer.ply.lex.NullLogger,),
          dict(__init__=lambda s, *_, **__: (None, s.super().__init__())[0]))
 
-cockpit = {}
-if has_cockpit():
-    cockpit = load_cockpit()
-
 
 @app.route('/')
 def index():
-    return render_template('index.html', pages=pages, cms_url=cockpit['cms_url'] or '')
+    return render_template('index.html', pages=pages)
 
 
 @app.route('/<path:path>/')
 def page(path):
     page_data = pages.get_or_404(path)
     template = page_data.meta.get('template', 'page.html')
-    return render_template(template, page=page_data, cms_url=cockpit['cms_url'] or '')
+    return render_template(template, page=page_data)
 
 
 def minify_js(code):
@@ -107,12 +100,12 @@ if __name__ == '__main__':
         rmtree("build")
         os.mkdir("build")
 
+    print(sys.argv)
+
     if len(sys.argv) > 1:
         command = sys.argv[1]
         if command == 'build':
             build_pages()
-        elif command == 'fetch_data' and has_cockpit():
-            fetch_data()
     else:
         build_pages()
         run_dev()
