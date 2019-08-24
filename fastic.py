@@ -4,6 +4,7 @@ import sys
 
 import slimit
 
+from dotenv import load_dotenv, find_dotenv
 from dukpy import babel_compile
 from glob import glob
 from livereload import Server
@@ -12,7 +13,9 @@ from flask_flatpages import FlatPages
 from flask_frozen import Freezer
 from shutil import copyfile, rmtree
 
-DEBUG = True
+load_dotenv(find_dotenv())
+
+DEBUG = os.getenv("DEBUG")
 FLATPAGES_AUTO_RELOAD = DEBUG
 FLATPAGES_EXTENSION = ".md"
 
