@@ -5,18 +5,13 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/2b6e7e5a-e314-47b7-be7b-e7d4dfc630e7/deploy-status)](https://app.netlify.com/sites/fastic/deploys)
 
 ### requirements
-`pipenv`
 `python 3`
 
 ### setup
-`pipenv install`
-
-`pipenv shell`
+`python3 -m venv venv && . ./venv/bin/activate && pip install -r requirements.txt`
 
 ### run dev
 `python fastic.py`
 
 ### run build
 `python fastic.py build`
-
-### TODO: Add cockpit integration details
