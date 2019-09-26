@@ -14,7 +14,7 @@
 `python3 -m venv venv && . ./venv/bin/activate && pip install -r requirements.txt`
 
 ### run dev
-`python fastic.py`
+`python3 fastic.py`
 
 ### run build
-`python fastic.py build`
+`python3 fastic.py build`
