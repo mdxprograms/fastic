@@ -11,7 +11,9 @@
 `python 3`
 
 ### setup
-`python3 -m venv venv && . ./venv/bin/activate && pip install -r requirements.txt && echo "DEBUG=True" > .env`
+```bash
+python3 -m venv venv && . ./venv/bin/activate && pip install -r requirements.txt && echo "DEBUG=True" > .env
+```
 
 ### run dev
 `python3 fastic.py`
