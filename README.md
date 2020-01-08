@@ -12,11 +12,11 @@
 
 ### setup
 ```bash
-python3 -m venv venv && . ./venv/bin/activate && pip install -r requirements.txt && echo "DEBUG=True" > .env
+make create-venv && echo "DEBUG=True" > .env
 ```
 
 ### run dev
-`python3 fastic.py`
+`make dev`
 
 ### run build
-`python3 fastic.py build`
+`make build`
