@@ -37,15 +37,17 @@ slimit.lexer.ply.lex.PlyLogger = \
 @app.route('/')
 def index():
     pages.parent = config
-    return render_template('index.html', fast=pages)
+    collections = get_collections()
+    return render_template('index.html', fast=pages, collections=collections)
 
 
 @app.route('/<path:path>/')
 def page(path):
     page_data = pages.get_or_404(path)
     page_data.parent = config
+    collections = get_collections()
     template = page_data.meta.get('template', 'page.html')
-    return render_template(template, fast=page_data)
+    return render_template(template, fast=page_data, collections=collections)
 
 
 def minify_js(code):
@@ -83,6 +85,18 @@ def copy_images():
 
     for img in glob("assets/images/**/*.*", recursive=True):
         copyfile(img, f'build/{img}')
+        
+
+def get_collections():
+    collections = {}
+    if config.collection_sets:
+        for collection in config.collection_sets:
+            collections[collection] = []
+            for f in glob(f'./pages/{collection}/**/*.md', recursive=True):
+                coldata = pages.get_or_404(
+                    f.replace('./pages/', '').replace('.md', '')).meta
+                collections[collection].append(coldata)
+        return collections
 
 
 def build_pages():
