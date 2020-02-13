@@ -20,3 +20,18 @@ make create-venv && echo "DEBUG=True" > .env
 
 ### run build
 `make build`
+
+### Using Collections
+If you have a need for collections you can specify the folder within `config.py`
+
+Example: `collections = ['products']`
+
+This will grab all `.md` files within `pages/products` and add them to the
+`collections` dict to use in your templates.
+
+Assuming there would be a `title` frontmatter property in a products collection file.
+```jinja2
+{% for product in collections.products %}
+  <h3>{{ product.title }}</h3>
+{% endfor %}
+```

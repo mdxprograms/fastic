@@ -96,7 +96,7 @@ def get_collections():
                 coldata = pages.get_or_404(
                     f.replace('./pages/', '').replace('.md', '')).meta
                 collections[collection].append(coldata)
-        return collections
+    return collections
 
 
 def build_pages():
