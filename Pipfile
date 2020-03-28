@@ -1,0 +1,37 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+livereload = "==2.6.1"
+pylint = "==2.3.1"
+
+[packages]
+astroid = "==2.2.5"
+click = "==7.0"
+dukpy = "==0.2.2"
+htmlmin = "==0.1.12"
+isort = "==4.3.21"
+itsdangerous = "==1.1.0"
+lazy-object-proxy = "==1.4.2"
+libsass = "==0.19.2"
+mccabe = "==0.6.1"
+ply = "==3.11"
+python-dotenv = "==0.10.3"
+six = "==1.12.0"
+slimit = "==0.8.1"
+tornado = "==6.0.3"
+typed-ast = "==1.4.0"
+wrapt = "==1.11.2"
+Flask = "==1.1.1"
+Flask-FlatPages = "==0.7.1"
+Frozen-Flask = "==0.15"
+Jinja2 = "==2.10.1"
+Markdown = "==3.1.1"
+MarkupSafe = "==1.1.1"
+PyYAML = "==5.1.2"
+Werkzeug = "==0.15.5"
+
+[requires]
+python_version = "3.7"
