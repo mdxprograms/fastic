@@ -102,7 +102,7 @@ def run_dev():
     server.watch('./templates', build_pages)
     server.watch('./assets/sass', build_styles)
     server.watch('./assets/js', build_js)
-    server.serve(root='build', port=5000)
+    server.serve(root='build', host="0.0.0.0", port=5000)
 
 
 if __name__ == '__main__':

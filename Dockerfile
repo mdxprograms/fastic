@@ -17,8 +17,6 @@ RUN pipenv install --dev
 
 COPY . /app
 
-EXPOSE 80
-
 # Run fastic
 ENTRYPOINT ["pipenv", "run"]
 
