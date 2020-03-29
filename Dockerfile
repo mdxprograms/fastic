@@ -1,29 +1,25 @@
-FROM python3.7-slim as base
+FROM python:3.7-slim
 
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONFAULTHANDLER 1
 
-FROM base AS python-deps
+COPY ./Pipfile /app/Pipfile
+COPY ./Pipfile.lock /app/Pipfile.lock
 
-RUN pip install pipenv
+WORKDIR /app
+
 RUN apt-get update && apt-get install -y --no-install-recommends gcc
 
-COPY Pipfile .
-COPY Pipfile.lock .
-RUN PIPENV_VENV_IN_PROJECT=1 pipenv install --deploy
+RUN pip install pipenv
+RUN pipenv install --dev
 
-FROM base AS runtime
+COPY . /app
 
-COPY --from=python-deps /.venv /.venv
-ENV PATH="/.venv/bin:$PATH"
-
-RUN useradd --create-home appuser
-WORKDIR /home/appuser
-USER appuser
-
-COPY . .
+EXPOSE 80
 
 # Run fastic
+ENTRYPOINT ["pipenv", "run"]
+
 CMD ["python", "fastic.py"]
