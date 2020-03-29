@@ -9,6 +9,7 @@
 
 ### requirements
 `python 3`
+`docker`
 
 ### setup
 ```bash

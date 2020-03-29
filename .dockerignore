@@ -1,0 +1,15 @@
+# Ignore everything
+**
+
+# ... except for dependencies and source
+!Pipfile
+!Pipfile.lock
+
+# these will need removed once in package setup
+!assets/
+!pages/
+!templates/
+!fastic.py
+!config.py
+!runtime.txt
+!.env

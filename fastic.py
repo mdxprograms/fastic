@@ -7,7 +7,6 @@ import slimit
 from dotenv import load_dotenv, find_dotenv
 from dukpy import babel_compile
 from glob import glob
-from livereload import Server
 from flask import Flask, render_template
 from flask_flatpages import FlatPages
 from flask_frozen import Freezer
@@ -16,6 +15,9 @@ from shutil import copyfile, rmtree
 import config
 
 load_dotenv(find_dotenv())
+
+if os.getenv("FLASK_ENV") != "production":
+    from livereload import Server
 
 DEBUG = os.getenv("DEBUG")
 FLATPAGES_AUTO_RELOAD = DEBUG
@@ -114,7 +116,7 @@ def run_dev():
     server.watch('./templates', build_pages)
     server.watch('./assets/sass', build_styles)
     server.watch('./assets/js', build_js)
-    server.serve(root='build', port=5555)
+    server.serve(root='build', host="0.0.0.0", port=5000)
 
 
 if __name__ == '__main__':
@@ -122,7 +124,8 @@ if __name__ == '__main__':
         rmtree("build")
         os.mkdir("build")
 
-    if len(sys.argv) > 1 and sys.argv[1] == 'build':
+    if len(sys.argv) > 1 and sys.argv[1] == 'build' or os.getenv(
+            "FLASK_ENV") == "production":
         build_pages()
     else:
         build_pages()
