@@ -6,6 +6,7 @@ verify_ssl = true
 [dev-packages]
 livereload = "==2.6.1"
 pylint = "==2.3.1"
+twine = "*"
 
 [packages]
 astroid = "==2.2.5"
